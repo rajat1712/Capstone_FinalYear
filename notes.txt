@@ -1,0 +1,12 @@
+Limitations 
+Although standard CSA offers a very simple
+and efficient solution, still it has certain limitations when
+solving complex tuning problems . The performance of CSA is sensitive to the initialization of its controlling parameters, namely AP and fl.
+Therefore, results achieved vary based on the value of these parameters chosen as well as on the past experience.
+Further, constant values of control parameters AP and fl
+limit the proper exploring of search space in which good
+solutions may be present.
+Additionally, standard CSA shows premature convergence
+and stagnation when applied to solve complex problems. To address these issues,
+the performance of original CSA is enhanced to optimize
+PID controller.

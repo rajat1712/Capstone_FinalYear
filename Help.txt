@@ -1,0 +1,66 @@
+--------Initilization Function------
+
+The main function of this function is to generate random crow positions 
+along with the parameters and boundaries.
+N here is the flock size and pd is the problem dimnesion which takes 5 
+values namely kp,ki,kd,lamda and mu
+Now a loop goes for every value for pd for every crow we generate random 
+postion. These values of lower limit and upper limit we've obtained from 
+existing literature survey that we did. We had the values of kp,ki,kd,
+lamda and mu by which we defined boundaries for each values.
+x(i,j) is used to generate random position of the crows. rand refers to a 
+random value which has value ranging from 0 to 1
+
+----------------------------------------------------------------------
+
+-------ECSA Code---------
+
+This is the main code for Enhanced Crow Search Algorithm. At first we've
+defined some parameters which we need in our code.
+The ranges of awareness probability were defined from the literature we 
+had. Alpha is the controller effort which we've used in fitness 
+function.
+x stands for the initial position which we get from the initializarion
+function along with upper limits and lower limimts for every value of 
+pd.
+Now we've run a loop for every crow and we've evaluated the initial 
+fitness of the positions. This has been using fitness function which 
+we've initialzed further.
+x(i,:) means getting the values from ith row at a time from the vector
+of initial positions.
+tmax refers to the maximum number of iterations.
+Now in this loop for everyiteration we're generating new set of positions.
+srate is the success rate which takes value between 0 and 1. 
+num is the random crow which will be used for following.
+Ap has been caluculated using this formula. Here ran is the value which
+we initialised earlier.
+Now for every crow we've generated the new set of positions using two 
+conditions.
+-- The first condition refers to that if the crow j does not know crow i 
+is following it. As a result, crow i will approach to the hiding place
+ of crow j. In this case, the new position of crow i is obtained as 
+follows:
+-- And the second condition which is in else refers to the Crow j knows
+ that crow i is following it. As a result, in order to protect its cache
+ from being pilfered, crow j will fool crow i by going to another
+ position of the search space.
+xbest refers to the new set of positions. x is the previous set of
+positions.
+After that again we've again evaluated the fitness of the current
+positions.
+Here in this loop we're updating the position and the memory if the 
+after comparing the previous fitness values with the current fitness 
+values.
+W're taking the minimum of the values as we want the minimum values so 
+taht we can reduce the performance parameters of the control system.
+This is the condition for ESCA to change the flight length according to 
+the values of sucess rate.
+After taht we've stored the current minimum set of positions in the 
+memory. These are the best values until iteration t.
+After that we've evaluated the ngbest which gives us the index of
+the mininmum value. Usinf that we've evaluated the global best which 
+is the solution of the problem. which generates a 1x5 matrix which
+are the values of kp,ki,kd,lamda and mu.
+Aaage gbest aur ngbest ke baare puchna hai
+
+-------------------------------------------------------------------------------------

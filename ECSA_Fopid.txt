@@ -1,0 +1,77 @@
+format long; close all; clear all; clc
+
+pd=5; % Problem dimension (number of decision variables)
+N=5; % Flock (population) size
+ran=0.5;
+AP=0.5; % Awareness probability
+fl=2; % Flight length (fl)
+alpha= 0.4;
+
+
+[x l u]=init(N,pd); % Function for initialization- doubt
+
+xn=x; % Initial random positions
+
+
+for i=1:N
+    ft(i)=finalfitnessmodel(xn(i,:),alpha); % xn(i,:) means getting the values from ith row at a time from the vector of initial positions
+end
+
+
+
+
+% % F= finalfitnessmodel(in_para)
+mem=x; % Memory initialization
+fit_mem=ft; % Fitness of memory positions
+
+tmax=10; % Maximum number of iterations (itermax)
+for t=1:tmax
+    srate = 0 + (1-0).*rand(1,1); % srate= success rate taking random values between 0 and 1
+    num=ceil(N*rand(1,N));% Generation of random candidate crows for following (chasing)
+    AP = (AP + ran*((tmax-t)/tmax));
+    for i=1:N
+        if rand>AP % The condition if the crow j does not know crow i is following it. As a result, crow i will approach to the hiding place of crow j. In this case, the new position of crow i is obtained as follows:
+
+            xnew(i,:)= x(i,:)+fl*rand*(mem(num(i),:)-x(i,:)); % Generation of a new position for crow i (state 1)
+        else % Crow j knows that crow i is following it. As a result, in order to protect its cache from being pilfered, crow j will fool crow i by going to another position of the search space.
+
+            for j=1:pd  
+                xnew(i,j)=l-(l-u)*rand; % Generation of a new position for crow i (state 2)
+            end
+        end
+    end
+    
+    xn=xnew;
+    
+    for i=1:N
+        ft(i)=finalfitnessmodel(xn(i,:),alpha);  % Evaluating fitness function for new positions
+    end
+    
+    
+    
+    
+    % %     ft=fitness(xn,N,pd); % Function for fitness evaluation of new solutions
+    
+    for i=1:N % Update position and memory
+        if (xnew(i,:)>=l & xnew(i,:)<=u)
+            x(i,:)=xnew(i,:); % Update position
+            if ft(i)<fit_mem(i)  % Comparing previous fitness values with current fitness values
+                mem(i,:)=xnew(i,:); % Update memory
+                fit_mem(i)=ft(i);
+            end
+        end
+    end
+    
+    if srate>= 1/5    % Additional condition for ECSA
+        fl = fl*0.85;
+    else
+        fl = fl/0.85;
+    end
+    
+    
+    ffit(t)=min(fit_mem); % Best found value until iteration t
+    min(fit_mem)
+end
+
+ngbest=find(fit_mem== min(fit_mem));
+g_best=mem(ngbest(1),:); % Solution of the problem

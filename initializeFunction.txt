@@ -1,0 +1,27 @@
+function [x l u]=init(N,pd) % Function for initialization
+% N represents the Flock Size
+% pd is the problem dimension which is 5. For pd=1 we're evaluating kp, for
+% pd=2 ki, for pd=3 kd, for pd=4 lamda and for pd=5 mu
+l=0; u=10; % Initial Lower and upper bounds
+
+for i=1:N % Generation of initial solutions (position of crows)
+    for j=1:pd
+        if j == 1   % For Kp
+            l = 0.005
+            u = 0.02
+        elseif j ==2   % For Ki
+            l = 0.02
+            u = 0.04
+        elseif j==3    % For Kd
+            l=0.04
+            u=0.06
+        elseif j==4    % For lamda
+            l=0.8
+            u=1.00
+        else
+            l=0.85   % For mu
+            u=1.00
+        x(i,j)=l-(l-u)*rand; % Generating random position of the crows in the space
+        end
+    end
+end
